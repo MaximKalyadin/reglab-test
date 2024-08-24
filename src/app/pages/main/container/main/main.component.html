@@ -1,4 +1,9 @@
 <app-mini-profile [user]="user$ | async" (logoutEvent)="logout()" />
+<app-list-channels
+    (newChannel)="newChannel()"
+    (selectChannel)="selectedChannel($event)"
+    [channels]="channels$ | async"
+    [loading]="isLoadingCreateChannel$ | async" />
 <app-users
     [users]="users$ | async"
     [loading]="isLoadingCreateUser$ | async"

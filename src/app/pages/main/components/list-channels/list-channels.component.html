@@ -1,0 +1,28 @@
+<span class="title">Чаты</span>
+<div class="channels">
+    @for (channel of channels; track channel) {
+        <div
+            class="channels__channel"
+            (click)="chooseChannel(channel)"
+            [ngClass]="{
+                active: channel.id === selectedChannel?.id,
+            }">
+            <span class="channels__name">{{ channel.name }}</span>
+        </div>
+    }
+</div>
+<div class="px-3">
+    @if (loading) {
+        <p-progressSpinner
+            styleClass="w-3rem h-3rem"
+            class="h-12 align-items-center flex"
+            strokeWidth="6" />
+    } @else {
+        <p-button
+            label="Добавить чат"
+            severity="primary"
+            [rounded]="true"
+            (onClick)="addChannel()"
+            class="p-fluid" />
+    }
+</div>

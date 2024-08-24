@@ -6,30 +6,45 @@ import {
     catchError,
     EMPTY,
     map,
+    mergeMap,
     Observable,
     switchMap,
     tap,
     withLatestFrom,
 } from 'rxjs';
-import { User } from '@core/data-contracts/models';
+import { Channel, User } from '@core/data-contracts/models';
 
 interface MainState {
+    user: User | null;
     users: User[];
+    channels: Channel[];
     isLoadingCreateUser: boolean;
+    isLoadingCreateChannel: boolean;
 }
 
 const defaultState: MainState = {
+    user: null,
     users: [],
+    channels: [],
     isLoadingCreateUser: false,
+    isLoadingCreateChannel: false,
 };
 
 @Injectable()
 export class MainStoreService extends ComponentStore<MainState> {
-    readonly user$: Observable<User | null>;
+    readonly user$: Observable<User | null> = this.select(state => state.user);
     readonly users$: Observable<User[]>;
 
-    isLoadingCreateUser$: Observable<boolean> = this.select(
+    readonly isLoadingCreateUser$: Observable<boolean> = this.select(
         state => state.isLoadingCreateUser
+    );
+
+    readonly isLoadingCreateChannel$: Observable<boolean> = this.select(
+        state => state.isLoadingCreateUser
+    );
+
+    readonly channels$: Observable<Channel[]> = this.select(
+        state => state.channels
     );
 
     constructor(
@@ -38,12 +53,20 @@ export class MainStoreService extends ComponentStore<MainState> {
     ) {
         super(defaultState);
 
-        this.user$ = auth.user$;
+        this.effect(() => {
+            return this.auth.user$.pipe(
+                tap(user => {
+                    this.patchState({
+                        user: user,
+                    });
+                })
+            );
+        });
 
         this.users$ = this.select(state => state.users).pipe(
-            withLatestFrom(this.user$),
-            map(([users, currentUser]) => {
-                return users.filter(user => user.id !== currentUser?.id);
+            withLatestFrom(this.state$),
+            map(([users, state]) => {
+                return users.filter(user => user.id !== state.user?.id);
             })
         );
     }
@@ -107,6 +130,52 @@ export class MainStoreService extends ComponentStore<MainState> {
                     isLoadingCreateUser: false,
                 });
                 this.#updateUsersWithNewUser(user);
+            })
+        );
+    });
+
+    readonly getChannel = this.effect((action$: Observable<number>) => {
+        return action$.pipe(
+            mergeMap(id => {
+                if (!id) {
+                    return EMPTY;
+                }
+
+                return this.client.getChannel(id).pipe(
+                    catchError(err => {
+                        return EMPTY;
+                    })
+                );
+            }),
+            withLatestFrom(this.state$),
+            tap(([channel, state]) => {
+                if (channel.length) {
+                    this.patchState({
+                        channels: [...state.channels, channel[0]],
+                    });
+                }
+            })
+        );
+    });
+
+    readonly getUserChannel = this.effect((action$: Observable<void>) => {
+        return action$.pipe(
+            withLatestFrom(this.state$),
+            switchMap(([_, state]) => {
+                if (!state.user) {
+                    return EMPTY;
+                }
+
+                return this.client.getUserChannel(state.user.id).pipe(
+                    catchError(err => {
+                        return EMPTY;
+                    })
+                );
+            }),
+            tap(userChannels => {
+                userChannels.forEach(value => {
+                    this.getChannel(value.channel_id);
+                });
             })
         );
     });
