@@ -1,0 +1,5 @@
+<app-mini-profile [user]="user$ | async" (logoutEvent)="logout()" />
+<app-users
+    [users]="users$ | async"
+    [loading]="isLoadingCreateUser$ | async"
+    (newUser)="addUser()" />

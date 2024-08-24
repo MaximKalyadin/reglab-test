@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "reglab-chat": {
+    "reglab-test": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/reglab-chat",
+            "outputPath": "dist/reglab-test",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -65,11 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "reglab-chat:build:production"
+              "buildTarget": "reglab-test:build:production"
             },
             "development": {
-              "buildTarget": "reglab-chat:build:development",
-              "proxyConfig": "proxy.conf.json"
+              "buildTarget": "reglab-test:build:development"
             }
           },
           "defaultConfiguration": "development"

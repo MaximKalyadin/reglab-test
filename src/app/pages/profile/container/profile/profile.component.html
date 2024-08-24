@@ -1,0 +1,48 @@
+<div class="profile">
+    <div class="flex gap-2 justify-content-between align-items-center">
+        <span class="title">Профиль</span>
+        <div class="gap-2 flex">
+            <p-button
+                icon="pi pi-sign-out"
+                [rounded]="true"
+                severity="danger"
+                (onClick)="logout()" />
+        </div>
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="username">Имя пользователя</label>
+        <input
+            pInputText
+            id="username"
+            aria-describedby="username"
+            [formControl]="username" />
+        <small id="error-name" class="error-label">
+            @if (username.hasError('required') && username.dirty) {
+                Поле не должно быть пустым
+            }
+            @if (username.hasError('error')) {
+                Не удалось обновить поле username
+            }
+        </small>
+    </div>
+    @if (isLoading$ | async) {
+        <p-progressSpinner
+            styleClass="w-3rem h-3rem"
+            class="h-12 align-items-center flex"
+            strokeWidth="6" />
+    } @else {
+        <p-button
+            [disabled]="username.invalid"
+            label="Изменить"
+            severity="primary"
+            [rounded]="true"
+            (onClick)="changeUserName()"
+            class="p-fluid" />
+        <p-button
+            routerLink="/Chat"
+            label="Назад"
+            severity="secondary"
+            [rounded]="true"
+            class="p-fluid" />
+    }
+</div>

@@ -1,0 +1,15 @@
+<div class="flex gap-2 justify-content-between align-items-center p-3">
+    <span class="title">{{ user?.username || '' }}</span>
+    <div class="buttons">
+        <p-button
+            routerLink="/user"
+            icon="pi pi-user"
+            [rounded]="true"
+            severity="primary" />
+        <p-button
+            icon="pi pi-sign-out"
+            [rounded]="true"
+            severity="danger"
+            (onClick)="logout()" />
+    </div>
+</div>

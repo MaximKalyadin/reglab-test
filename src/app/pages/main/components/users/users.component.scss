@@ -1,0 +1,43 @@
+:host {
+    position: relative;
+}
+
+.title {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.users {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+    max-height: 100%;
+
+    &__user {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    &__name {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    &__online {
+        border-radius: 1rem;
+        width: 1rem;
+        height: 1rem;
+
+        &.online {
+            background-color: green;
+        }
+
+        &.offline {
+            background-color: red;
+        }
+    }
+}

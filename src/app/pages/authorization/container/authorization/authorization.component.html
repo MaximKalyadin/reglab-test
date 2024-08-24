@@ -1,0 +1,64 @@
+<div class="auth">
+    <span class="auth__title"> Авторизация </span>
+    <form
+        [formGroup]="authForm"
+        (submit)="signIn()"
+        class="flex flex-column gap-2">
+        <div class="flex flex-column gap-2">
+            <label for="username">Имя пользователя</label>
+            <input
+                autocomplete="name"
+                placeholder="user"
+                pInputText
+                id="username"
+                aria-describedby="username"
+                [formControl]="authForm.controls.username" />
+            <small id="error-name" class="error-label">
+                @if (
+                    authForm.controls.username.hasError('required') &&
+                    authForm.controls.username.dirty
+                ) {
+                    Введите имя пользователя
+                }
+            </small>
+        </div>
+        <div class="flex flex-column gap-2 w-12">
+            <label for="passwordInput" class="headline label">Пароль</label>
+            <p-password
+                autocomplete="current-password"
+                aria-describedby="password"
+                id="passwordInput"
+                [feedback]="false"
+                [formControl]="authForm.controls.password" />
+            <small id="password" class="error-label">
+                @if (
+                    authForm.controls.password.hasError('required') &&
+                    authForm.controls.password.dirty
+                ) {
+                    Введите пароль
+                }
+            </small>
+        </div>
+
+        <small class="error-label">
+            @if (authForm.hasError('error')) {
+                Не правильно введен логин или пароль
+            }
+        </small>
+
+        @if (isLoading$ | async) {
+            <p-progressSpinner
+                styleClass="w-3rem h-3rem"
+                class="h-12 align-items-center flex"
+                strokeWidth="6" />
+        } @else {
+            <p-button
+                [disabled]="authForm.invalid"
+                label="Войти"
+                severity="primary"
+                [rounded]="true"
+                type="submit"
+                class="p-fluid" />
+        }
+    </form>
+</div>

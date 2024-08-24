@@ -1,0 +1,29 @@
+<span class="title">Пользователи</span>
+<div class="users">
+    @for (user of users; track user) {
+        <div class="users__user">
+            <div
+                class="users__online"
+                [ngClass]="{
+                    online: user.is_online,
+                    offline: !user.is_online,
+                }"></div>
+            <span class="users__name">{{ user.username }}</span>
+        </div>
+    }
+</div>
+<div class="px-3">
+    @if (loading) {
+        <p-progressSpinner
+            styleClass="w-3rem h-3rem"
+            class="h-12 align-items-center flex"
+            strokeWidth="6" />
+    } @else {
+        <p-button
+            label="Добавить пользователя"
+            severity="primary"
+            [rounded]="true"
+            (onClick)="addUser()"
+            class="p-fluid" />
+    }
+</div>

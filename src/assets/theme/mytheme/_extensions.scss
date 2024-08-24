@@ -1,0 +1,21 @@
+/* Customizations to the designer theme should be defined here */
+.p-ink {
+    background: var(--primary-color);
+    opacity: 0.5;
+}
+
+.p-ink-active {
+    background: var(--primary-color);
+}
+
+.p-progress-spinner-circle {
+    stroke: var(--primary-color) !important;
+}
+
+.p-checkbox-box {
+    border-radius: 0.4rem;
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    border-color: #C3C2C3;
+}
