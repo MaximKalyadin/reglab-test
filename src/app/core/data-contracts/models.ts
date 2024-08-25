@@ -1,25 +1,26 @@
 export interface User {
-    id: number;
+    id?: string;
     username: string;
     password: string;
     is_online: boolean;
 }
 
 export interface Channel {
-    id: number;
+    id?: string;
     name: string;
 }
 
 export interface Message {
-    id: number;
+    id: string;
     content: string;
-    from_user: number;
-    channel_id: number;
+    from_user: string;
+    channel_id: string;
 }
 
 export interface UserChannel {
-    user_id: number;
-    channel_id: number;
+    id?: string;
+    user_id: string;
+    channel_id: string;
 }
 
 export interface UsersRequest {

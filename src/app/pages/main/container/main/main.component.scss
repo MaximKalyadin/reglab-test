@@ -1,0 +1,23 @@
+:host ::ng-deep {
+    .p-dialog-header, .p-dialog-content {
+        background: lightgray;
+    }
+
+    .p-dialog .p-dialog-header .p-dialog-header-icon {
+        border-radius: 0.5rem;
+    }
+
+    .p-multiselect {
+        width: 100%;
+    }
+
+    .p-dialog-content {
+        height: auto;
+        overflow: visible;
+    }
+
+    .p-icon {
+        width: 1rem;
+        height: 1rem;
+    }
+}

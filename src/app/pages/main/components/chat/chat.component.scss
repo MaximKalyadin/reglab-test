@@ -1,0 +1,34 @@
+:host ::ng-deep {
+    .pi {
+        font-size: 1rem
+    }
+
+    .p-inputtext {
+        padding: .5rem
+    }
+}
+
+.title {
+    margin: 1rem 0 0 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    height: 1rem;
+}
+
+.messages {
+    margin: 1rem;
+
+    border: 1px lightgray solid;
+    border-radius: 1rem;
+
+    height: calc(100dvh - (5rem + 36px))
+}
+
+.panel-send {
+    padding: 0 1rem;
+
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}

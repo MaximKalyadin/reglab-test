@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Channel, User, UserChannel } from '@core/data-contracts/models';
+import {
+    Channel,
+    Message,
+    User,
+    UserChannel,
+} from '@core/data-contracts/models';
 import { environment } from '@env/environment';
 
 @Injectable()
@@ -18,7 +23,22 @@ export class MainClientService {
         });
     }
 
-    getUserChannel(user_id: number): Observable<UserChannel[]> {
+    addNewChannel(channel: Channel): Observable<Channel> {
+        return this.http.post<Channel>(`${environment.baseUrl}/channels`, {
+            ...channel,
+        });
+    }
+
+    addNewUSerChannel(userChannel: UserChannel): Observable<UserChannel> {
+        return this.http.post<UserChannel>(
+            `${environment.baseUrl}/user_channels`,
+            {
+                ...userChannel,
+            }
+        );
+    }
+
+    getUserChannel(user_id: string): Observable<UserChannel[]> {
         return this.http.get<UserChannel[]>(
             `${environment.baseUrl}/user_channels`,
             {
@@ -29,10 +49,18 @@ export class MainClientService {
         );
     }
 
-    getChannel(id: number): Observable<Channel[]> {
+    getChannel(id: string): Observable<Channel[]> {
         return this.http.get<Channel[]>(`${environment.baseUrl}/channels/`, {
             params: {
                 id,
+            },
+        });
+    }
+
+    getMessages(channel: Channel): Observable<Message[]> {
+        return this.http.get<Message[]>(`${environment.baseUrl}/messages`, {
+            params: {
+                channel_id: channel.id || '',
             },
         });
     }

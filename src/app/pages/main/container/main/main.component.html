@@ -2,9 +2,73 @@
 <app-list-channels
     (newChannel)="newChannel()"
     (selectChannel)="selectedChannel($event)"
-    [channels]="channels$ | async"
-    [loading]="isLoadingCreateChannel$ | async" />
+    [channels]="channels$ | async" />
 <app-users
     [users]="users$ | async"
     [loading]="isLoadingCreateUser$ | async"
     (newUser)="addUser()" />
+
+<app-chat
+    [users]="users$ | async"
+    [channel]="selectedChannels$ | async"
+    [messages]="messages$ | async"
+    (sendMessage)="sendMessage($event)" />
+
+<p-dialog
+    header="Создание чата"
+    [modal]="true"
+    [(visible)]="dialogVisible"
+    [style]="{ width: '25rem' }">
+    <form [formGroup]="createChannelForm" (submit)="saveChannel()">
+        <div class="flex flex-column gap-2">
+            <label for="channel">Название чата</label>
+            <input
+                placeholder="general"
+                pInputText
+                id="channel"
+                aria-describedby="channel-name"
+                [formControl]="createChannelForm.controls.name" />
+            <small id="channel-name" class="error-label">
+                @if (
+                    createChannelForm.controls.name.hasError('required') &&
+                    createChannelForm.controls.name.dirty
+                ) {
+                    Введите название чата
+                }
+            </small>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="channel">Участники чата</label>
+            @if (users$ | async; as users) {
+                <p-multiSelect
+                    class="w-12"
+                    [options]="users"
+                    [formControl]="createChannelForm.controls.users"
+                    optionLabel="username"
+                    placeholder="Выберите пользователей" />
+            }
+        </div>
+        <div class="flex justify-content-end gap-2 mt-2">
+            <p-button
+                label="Отменить"
+                severity="secondary"
+                [rounded]="true"
+                (onClick)="dialogVisible = false"
+                class="p-fluid" />
+            @if (isLoadingCreateChannel$ | async) {
+                <p-progressSpinner
+                    styleClass="w-3rem h-3rem"
+                    class="h-12 align-items-center flex"
+                    strokeWidth="6" />
+            } @else {
+                <p-button
+                    label="Добавить"
+                    severity="primary"
+                    [disabled]="createChannelForm.invalid"
+                    [rounded]="true"
+                    type="submit"
+                    class="p-fluid" />
+            }
+        </div>
+    </form>
+</p-dialog>

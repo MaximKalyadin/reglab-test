@@ -1,91 +1,47 @@
 {
-    "users": [
-        {
-            "id": "1",
-            "username": "Maxim",
-            "password": "test",
-            "is_online": true
-        },
-        {
-            "id": "2",
-            "username": "test2",
-            "password": "test2",
-            "is_online": false
-        },
-        {
-            "id": "3",
-            "username": "test3",
-            "password": "test3",
-            "is_online": true
-        },
-        {
-            "id": 4,
-            "is_online": false,
-            "password": "test4",
-            "username": "test4"
-        },
-        {
-            "id": 5,
-            "is_online": false,
-            "password": "test5",
-            "username": "test5"
-        },
-        {
-            "id": 6,
-            "is_online": false,
-            "password": "test6",
-            "username": "test6"
-        },
-        {
-            "id": 7,
-            "is_online": false,
-            "password": "test7",
-            "username": "test7"
-        },
-        {
-            "id": 8,
-            "is_online": false,
-            "password": "test8",
-            "username": "test8"
-        }
-    ],
-    "user_channels": [
-        {
-            "user_id": 1,
-            "channel_id": 1,
-            "id": 1
-        },
-        {
-            "user_id": 1,
-            "channel_id": 2,
-            "id": 2
-        },
-        {
-            "user_id": 2,
-            "channel_id": 1,
-            "id": 4
-        }
-    ],
-    "channels": [
-        {
-            "id": 1,
-            "name": "test channel"
-        },
-        {
-            "id": 2,
-            "name": "general channel"
-        },
-        {
-            "id": 3,
-            "name": "restore channel"
-        }
-    ],
-    "messages": [
-        {
-            "id": "1",
-            "from_user": 1,
-            "channel_id": 1,
-            "content": "Hello World"
-        }
-    ]
+  "users": [
+    {
+      "id": "jhbbu",
+      "username": "Maxim",
+      "password": "test",
+      "is_online": true
+    },
+    {
+      "id": "b8f3",
+      "is_online": false,
+      "password": "test0.8299032802687016",
+      "username": "test0.8299032802687016"
+    },
+    {
+      "id": "096a",
+      "is_online": false,
+      "password": "test0.806205933247383",
+      "username": "test0.806205933247383"
+    },
+    {
+      "id": "9b8c",
+      "is_online": false,
+      "password": "test0.2396217958456568",
+      "username": "test0.2396217958456568"
+    }
+  ],
+  "user_channels": [
+    {
+      "id": "0154",
+      "channel_id": "4adb",
+      "user_id": "b8f3"
+    },
+    {
+      "id": "e47d",
+      "channel_id": "4adb",
+      "user_id": "jhbbu"
+    }
+  ],
+  "channels": [
+    {
+      "id": "4adb",
+      "name": "new CHANNEL"
+    }
+  ],
+  "messages": []
 }

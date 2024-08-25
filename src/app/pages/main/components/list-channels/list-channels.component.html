@@ -12,17 +12,10 @@
     }
 </div>
 <div class="px-3">
-    @if (loading) {
-        <p-progressSpinner
-            styleClass="w-3rem h-3rem"
-            class="h-12 align-items-center flex"
-            strokeWidth="6" />
-    } @else {
-        <p-button
-            label="Добавить чат"
-            severity="primary"
-            [rounded]="true"
-            (onClick)="addChannel()"
-            class="p-fluid" />
-    }
+    <p-button
+        label="Добавить чат"
+        severity="primary"
+        [rounded]="true"
+        (onClick)="addChannel()"
+        class="p-fluid" />
 </div>

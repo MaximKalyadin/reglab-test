@@ -22,7 +22,6 @@ export class ListChannelsComponent {
     @Input({ required: true }) channels: Channel[] | null = [];
     @Output() newChannel = new EventEmitter<void>();
     @Output() selectChannel = new EventEmitter<Channel>();
-    @Input() loading: boolean | null = false;
 
     protected selectedChannel: Channel | null = null;
 
