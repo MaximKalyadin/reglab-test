@@ -64,4 +64,10 @@ export class MainClientService {
             },
         });
     }
+
+    addMessage(message: Message): Observable<Message> {
+        return this.http.post<Message>(`${environment.baseUrl}/messages`, {
+            ...message,
+        });
+    }
 }

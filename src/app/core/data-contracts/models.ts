@@ -11,10 +11,13 @@ export interface Channel {
 }
 
 export interface Message {
-    id: string;
+    id?: string;
     content: string;
     from_user: string;
     channel_id: string;
+    // добавил новое поле, только для того, чтобы группировать сообщения по дате
+    // дата в формате iso
+    date: string;
 }
 
 export interface UserChannel {

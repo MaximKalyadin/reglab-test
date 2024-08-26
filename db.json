@@ -7,33 +7,42 @@
       "is_online": true
     },
     {
-      "id": "b8f3",
-      "is_online": false,
-      "password": "test0.8299032802687016",
-      "username": "test0.8299032802687016"
+      "id": "scdsa",
+      "username": "Kristina",
+      "password": "test",
+      "is_online": false
     },
     {
-      "id": "096a",
-      "is_online": false,
-      "password": "test0.806205933247383",
-      "username": "test0.806205933247383"
-    },
-    {
-      "id": "9b8c",
-      "is_online": false,
-      "password": "test0.2396217958456568",
-      "username": "test0.2396217958456568"
+      "id": "awsvawsv",
+      "username": "Dima",
+      "password": "test",
+      "is_online": false
     }
   ],
   "user_channels": [
     {
       "id": "0154",
       "channel_id": "4adb",
-      "user_id": "b8f3"
+      "user_id": "jhbbu"
     },
     {
-      "id": "e47d",
+      "id": "scsc",
       "channel_id": "4adb",
+      "user_id": "scdsa"
+    },
+    {
+      "id": "erwsber",
+      "channel_id": "4adb",
+      "user_id": "awsvawsv"
+    },
+    {
+      "id": "4f28",
+      "channel_id": "76ad",
+      "user_id": "scdsa"
+    },
+    {
+      "id": "82dc",
+      "channel_id": "76ad",
       "user_id": "jhbbu"
     }
   ],
@@ -41,7 +50,54 @@
     {
       "id": "4adb",
       "name": "new CHANNEL"
+    },
+    {
+      "id": "76ad",
+      "name": "general"
     }
   ],
-  "messages": []
+  "messages": [
+    {
+      "id": "c4ba",
+      "channel_id": "4adb",
+      "content": "Привет",
+      "date": "2024-08-26T14:18:43.347Z",
+      "from_user": "jhbbu"
+    },
+    {
+      "id": "3381",
+      "channel_id": "4adb",
+      "content": "Привет",
+      "date": "2024-08-26T14:31:46.606Z",
+      "from_user": "scdsa"
+    },
+    {
+      "id": "18b3",
+      "channel_id": "4adb",
+      "content": "Как дела?",
+      "date": "2024-08-26T14:31:50.941Z",
+      "from_user": "scdsa"
+    },
+    {
+      "id": "4ff9",
+      "channel_id": "4adb",
+      "content": "Что делаешь?",
+      "date": "2024-08-26T14:32:34.976Z",
+      "from_user": "awsvawsv"
+    },
+    {
+      "id": "93e0",
+      "channel_id": "4adb",
+      "content": "Ничего",
+      "date": "2024-08-26T15:24:03.121Z",
+      "from_user": "jhbbu"
+    },
+    {
+      "id": "eb79",
+      "channel_id": "4adb",
+      "content": "Как у вас дела ?",
+      "date": "2024-08-26T15:38:15.003Z",
+      "from_user": "jhbbu"
+    }
+  ]
 }

@@ -16,6 +16,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { Messages } from 'primeng/messages';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
     selector: 'app-main',
@@ -86,5 +87,7 @@ export class MainComponent implements OnInit {
         this.store.addChannel();
     }
 
-    protected sendMessage(message: string): void {}
+    protected sendMessage(message: string): void {
+        this.store.addMessage(message);
+    }
 }

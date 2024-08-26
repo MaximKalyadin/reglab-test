@@ -70,6 +70,10 @@ export class AuthorizationStoreService extends ComponentStore<State> {
                     this.authForm.setErrors({ error: true });
                 } else {
                     this.auth.setUser(users[0]);
+                    this.auth.changeUserOnline({
+                        ...users[0],
+                        is_online: true,
+                    });
                     this.router.navigateByUrl('/Chat');
                 }
             })

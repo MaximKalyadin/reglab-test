@@ -145,7 +145,7 @@ export class MainStoreService extends ComponentStore<MainState> {
                     isLoadingCreateUser: true,
                 });
 
-                const id = Math.random();
+                const id = Math.floor(Math.random() * 100000) + 1;
 
                 return this.client
                     .addNewUser({
@@ -311,8 +311,47 @@ export class MainStoreService extends ComponentStore<MainState> {
                 );
             }),
             tap(messages => {
+                const messageData = messages.sort((a, b) => {
+                    return (
+                        new Date(a.date).getTime() - new Date(b.date).getTime()
+                    );
+                });
                 this.patchState({
-                    messages: messages,
+                    messages: [...messageData],
+                });
+            })
+        );
+    });
+
+    readonly addMessage = this.effect((action$: Observable<string>) => {
+        return action$.pipe(
+            withLatestFrom(this.state$),
+            mergeMap(([message, state]) => {
+                if (!message) {
+                    return EMPTY;
+                }
+
+                return this.client.addMessage({
+                    id: undefined,
+                    channel_id: state.selectedChannel?.id || '',
+                    content: message,
+                    date: new Date().toISOString(),
+                    from_user: state.user?.id || '',
+                });
+            }),
+            withLatestFrom(this.state$),
+            tap(([message, state]) => {
+                const messageData = [...state.messages, message].sort(
+                    (a, b) => {
+                        return (
+                            new Date(a.date).getTime() -
+                            new Date(b.date).getTime()
+                        );
+                    }
+                );
+
+                this.patchState({
+                    messages: [...messageData],
                 });
             })
         );

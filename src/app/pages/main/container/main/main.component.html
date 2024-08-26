@@ -1,18 +1,25 @@
-<app-mini-profile [user]="user$ | async" (logoutEvent)="logout()" />
-<app-list-channels
-    (newChannel)="newChannel()"
-    (selectChannel)="selectedChannel($event)"
-    [channels]="channels$ | async" />
-<app-users
-    [users]="users$ | async"
-    [loading]="isLoadingCreateUser$ | async"
-    (newUser)="addUser()" />
-
-<app-chat
-    [users]="users$ | async"
-    [channel]="selectedChannels$ | async"
-    [messages]="messages$ | async"
-    (sendMessage)="sendMessage($event)" />
+<div class="left-panel">
+    <app-mini-profile [user]="user$ | async" (logoutEvent)="logout()" />
+    <hr />
+    <app-list-channels
+        (newChannel)="newChannel()"
+        (selectChannel)="selectedChannel($event)"
+        [channels]="channels$ | async" />
+    <hr />
+    <app-users
+        [users]="users$ | async"
+        [loading]="isLoadingCreateUser$ | async"
+        (newUser)="addUser()" />
+</div>
+<hr />
+<div class="right-panel">
+    <app-chat
+        [users]="users$ | async"
+        [channel]="selectedChannels$ | async"
+        [messages]="messages$ | async"
+        [user]="user$ | async"
+        (sendMessage)="sendMessage($event)" />
+</div>
 
 <p-dialog
     header="Создание чата"

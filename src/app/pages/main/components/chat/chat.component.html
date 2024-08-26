@@ -1,5 +1,20 @@
 <span class="title">{{ channel?.name || '' }}</span>
-<div class="messages"></div>
+<div class="messages">
+    @for (message of messages; track message.id; let i = $index) {
+        <span
+            class="messages__title"
+            [ngClass]="{ me: isMy(message), 'd-none': isNone(i) }">
+            {{ isMy(message) ? user?.username || '' : getAuthor(message) }}
+        </span>
+        <span
+            class="messages__message"
+            [ngClass]="{
+                me: isMy(message),
+            }"
+            >{{ message.content }}</span
+        >
+    }
+</div>
 <div class="panel-send">
     <input
         class="w-12"
@@ -10,5 +25,6 @@
         icon="pi pi-send"
         [rounded]="true"
         severity="primary"
+        (keydown.enter)="send()"
         (onClick)="send()" />
 </div>

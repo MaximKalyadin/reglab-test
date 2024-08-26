@@ -1,27 +1,84 @@
-# ReglabChat
+# О приложении
+Ссылка на тестовое задание - https://docs.google.com/document/d/1lHoJfAjMe6F1WI340oHRE72NRNmoCW_RsBY1tmSVjG8/edit
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.2.
+## Вкладки приложения
+- `/Chat` - главная страница. На главной странице можно создать чат и прикрепить к нему людей, создать пользователей в системе, а также писать и общаться в чате.
+- `/login` - страница авторизации. Авторизация проходит по логину и паролю и сохраняется все в сервисе и localStorage (один из способов хранения пользователя или токена(ов)). Если бы был бы запрос по сети, можно бы ло бы еще прикрутить интерсептор
+- `/user` - страница пользователя. На этой странице можно изменить имя пользователя и выйти из системы.
 
-## Development server
+# Как правильно запустить frontend
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Чтобы запустить нужно сделать шаги:
+- Глобально установить `Node.js` версии `^16.14.0 || ^18.10.0`
+    - Чтобы проверить Вашу версия Node.js, запустите команду `node -v` в окне терминала/консоли.
+    - Для установки Node.js перейдите на сайт [nodejs.org](https://nodejs.org/en) .
+- Глобально Установить Angular `npm install -g @angular/cli`
+- Перейти в папку `reglab-test`
+- Из командной строки запустить следующие команды:
+  - `npm install`
+  - `npm run start:server`
+  - `npm start`
+- Перейти по ссылке http://localhost:4200/
+- Для авторизации можно посмотреть файл `reglab-test/db.json`
 
-## Code scaffolding
+## Чтобы сделать сборку фронтенда, нужно выполнить несколько шагов
+- `npm install`
+- `npm run build:release`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Чтобы сделать документацию по коду, нужно выполнить несколько шагов
+- `npm run compodoc:build-and-serve`
+- Перейти по ссылке http://127.0.0.1:8080
 
-## Build
+## Чтобы выполнить тесты, нужно выполнить несколько шагов
+- `npm run test`
+- Далее окно с проверкой откроется автоматически
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+# Структура проекта (фронтенд)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`app` исходный код приложения
 
-## Running end-to-end tests
+`assets` статический контент: иконки, шрифты
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+`environments` файлы с параметрами окружения
 
-## Further help
+## Каталог `core`
+низкоуровневые сервисы и модели данных: запросы на сервер, управление состоянием, контроллеры и т.д.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+`models` модели данных, относящиеся к описанию сущностей для взаимодействии с сервером, DTO
+
+## Каталог  `layout`
+корневая компонента приложения с хедером и боковым меню, внутри роутинг вложенных компонент(страниц)
+
+## Каталог  `pages`
+страницы приложения (имеют маршруты)
+
+## Каталог  `shared`
+компоненты, пайпы, сервисы и т.д., используемые в нескольких частях проекта.
+Подразделяется на 2 подпапки: `ui-kit` и `features`.
+
+`ui-kit` содержит расшариваемые компоненты без бизнес-логики.
+
+`features` содержит расшариваемые компоненты, в которых могу быть элементы бизнес-логики, специфичные для данного проекта.
+
+## Структура feature-модуля
+Структура отдельного feature-модуля состоит из папок:
+`components`, `containers`, `data-services`, `children-modules`, `shared`.
+
+Далее описывается содержимое этих папок.
+1. 	`components` содержит презентационные компоненты, которые зависят только от @Input и @Output. В эти компоненты не могут инжектироваться сервисы из папки data-services, которые работают с данными.
+      Для @Input рекомендуется использоваться Generic ReadonlyDeep, чтобы поддерживать иммутабельность.
+
+2.	`containers` содержить в себе smart-компоненты, которые агрегируют в своем шаблоне компоненты из соответствующей папки `components`. Контейнеры могут содержать зависимости из папки `data-services` для работы с данными. Рекомендуется избегать ручных подписок, передавая данные в презентационные компоненты через async pipe.
+
+Компоненты из папок `containers` и `components` обязательно используют ChangeDetectionStrategy.OnPush.
+
+3. `data-services` содержит сервисы, предназначенные для получения, обработки и хранения данных конкретного feature-модуля. рекомендуется использовать сервисы, которые наследуются от ngrx component-store.
+      Бизнес-логику реализуем в сервисах из папки `data-services`, при этом store сервис является связующим звеном, в котором хранится стейт компонента. В отдельных сервисах могут реализовываться отдельные части логики, однако каждый
+      такой сервис не имеет своего состояния (state). В частности, это означает, что эти сервисы не используют локальные члены класса примитивных типов. Используют только Observable и операции rxjs над ними.
+      Такой подход необходим для того, чтобы обеспечить отсутствие ручных подписок (subscribe) в компонентах, а также
+      исключить необоснованное использование ChangeDetectorRef.
+
+4. `children-modules` содержит дочерние feature-модули, которые соответствуют дочерним роутам основного feature-модуля. Каждый дочерний feature-модуль починяется той же структуре, что и все feature-модули.
+
+5. `shared` содержит общие переиспользуемые компоненты. Рекомендуется группировать однотипные сущности в этой папке по папкам: `components`, `directives`, `pipes`, `services` и т.п. Папка `shared` содержит свой модуль, в котором экспортируются все сущности этого модуля.
