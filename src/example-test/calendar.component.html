@@ -1,0 +1,106 @@
+<div class="calendar-container">
+    <div class="header mb-3">
+        <div class="row d-flex align-items-center">
+            <div class="col-12 col-lg-auto d-flex">
+                <h3 class="text-center w-100 m-0 text-wrap-balance">
+                    {{ todayString }}
+                </h3>
+            </div>
+            <br />
+            <div class="col d-none d-lg-block"></div>
+            <div class="col-12 col-lg-auto">
+                <div
+                    class="div-actions d-flex justify-content-center align-items-center"
+                >
+                    <div
+                        class="dprev d-flex align-items-center ms-3 arrow-link"
+                        (click)="prevMonth()"
+                    >
+                        <button mat-icon-button>
+                            <mat-icon>arrow_back_ios</mat-icon>
+                        </button>
+                        <span class="me-2 ms-2 month-navigation">{{
+                            "Site.PreviousMonth" | transloco
+                        }}</span>
+                    </div>
+                    <div class="ms-4 me-4">
+                        <button
+                            mat-icon-button
+                            (click)="setToday()"
+                            class="today"
+                        >
+                            <mat-icon>today</mat-icon>
+                        </button>
+                    </div>
+                    <div
+                        class="dnext d-flex align-items-center me-3 arrow-link"
+                        (click)="nextMonth()"
+                    >
+                        <span class="me-2 ms-2 month-navigation">{{
+                            "Site.NextMonth" | transloco
+                        }}</span>
+                        <button mat-icon-button>
+                            <mat-icon>arrow_forward_ios</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="weekdays mb-3">
+        <div class="days row">
+            <div
+                class="col pb-2 border-bottom"
+                *ngFor="let dayName of weekdays"
+            >
+                <span class="d-none d-lg-block">{{
+                    dayName.full | transloco
+                }}</span>
+                <span class="d-block d-lg-none">{{
+                    dayName.abbr | transloco
+                }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="body">
+        <div
+            class="row g-1 g-lg-2 week"
+            *ngFor="let week of days; index as index"
+            [class.border-bottom]="index < days.length - 1"
+        >
+            <div
+                class="col day pb-2 pb-lg-2"
+                *ngFor="let day of week"
+                [class.disabled]="isPrevDays(day.value)"
+                [class.opacity-50]="
+                    isPrevDays(day.value) || !isSameMonth(day.value)
+                "
+                [class.bg-primary]="isToday(day.value)"
+                [style.--bs-bg-opacity]="isToday(day.value) ? '0.1' : '0'"
+                (click)="selectDay(day)"
+            >
+                <ng-container
+                    *ngIf="dayNameTemplateRef; else defaultDayNameTemplate"
+                >
+                    <ng-template
+                        [ngTemplateOutlet]="dayNameTemplateRef"
+                        [ngTemplateOutletContext]="{
+                            $implicit: contextGetterCallback(day) ?? null
+                        }"
+                    />
+                </ng-container>
+                <ng-template #defaultDayNameTemplate />
+                <ng-container *ngIf="dayTemplateRef">
+                    <ng-template
+                        [ngTemplateOutlet]="dayTemplateRef"
+                        [ngTemplateOutletContext]="{
+                            $implicit: contextGetterCallback(day) ?? null
+                        }"
+                    />
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
